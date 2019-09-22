@@ -23,8 +23,7 @@ convert( options );
 | inputFile | Relative or absolue path of a code (text) file | undefined |
 | outputFile | Relative or absolue of the output image file | undefined |
 | language | Language of the code file | LANGUAGES.DART |
-| theme | Theme for the syntax highlighting | LANGUAGES.DART |
-| language | Language of the code file | THEMES.FIREWATCH |
+| theme | Theme for the syntax highlighting | THEMES.FIREWATCH |
 | padding | Gap between code and image edges. Value could be string or a number | '20,30' |
 | format | Format of the output image file | IMAGE_FORMATS.PNG |
 
