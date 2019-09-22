@@ -28,11 +28,9 @@ convert( options );
 | padding | Gap between code and image edges. Value could be string or a number | '20,30' |
 | format | Format of the output image file | IMAGE_FORMATS.PNG |
 
-> Supported themes: https://iterm2colorschemes.com/
-
-> Supported languages: https://github.com/highlightjs/highlight.js/tree/master/src/languages
-
-> Supported image formats: jpeg,jpg
+> Supported themes: https://iterm2colorschemes.com/ <br>
+Supported languages: https://github.com/highlightjs/highlight.js/tree/master/src/languages <br>
+Supported image formats: jpeg,jpg
 
 ## Example
 ```js
@@ -56,7 +54,7 @@ convert( {
 
 
 ## Upcoming changes
-- CLI Tool
-- Output image corner radius
-- Adding MacOS window frame to output image
-- Executing code file and compositing output image with the results
+- CLI tool to convert code to image files
+- Ability to add output image corner radius [optional]
+- Adding MacOS window frame to the output image [optional]
+- Executing code file and compositing output image with the results [optional]
