@@ -10,10 +10,10 @@ npm install --save catage
 ```js
 const path = require( 'path' );
 
-// import convert function and constants
+// import `convert` function and constants
 const { convert, IMAGE_FORMATS, LANGUAGES, THEMES } = require( 'catage' );
 
-// output code of `code` in `code.png` file
+// convert a code file to an image file
 convert( options );
 ```
 
@@ -38,7 +38,7 @@ const path = require( 'path' );
 // import convert function and constants
 const { convert, IMAGE_FORMATS, LANGUAGES, THEMES } = require( '../' );
 
-// output code of `code` in `code.png` file
+// convert `code.dart` file to `code.png` file
 convert( {
     inputFile: path.resolve( __dirname, 'code.dart' ),
     outputFile: path.resolve( __dirname, 'code.png' ),
