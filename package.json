@@ -1,0 +1,34 @@
+{
+  "name": "catage",
+  "version": "1.0.0",
+  "description": "Node package and CLI tool to convert code into image with syntax highlighting",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thatisuday/catage.git"
+  },
+  "keywords": [
+    "cli",
+    "cat",
+    "bash",
+    "syntax-highlighting",
+    "code",
+    "image-converter"
+  ],
+  "author": "Uday Hiwarale <thatisuday@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thatisuday/catage/issues"
+  },
+  "homepage": "https://github.com/thatisuday/catage#readme",
+  "dependencies": {
+    "ansi-to-image": "^1.0.0",
+    "chalk": "^2.4.2",
+    "emphasize": "^2.1.0",
+    "glob-promise": "^3.4.0",
+    "lodash": "^4.17.15"
+  }
+}
