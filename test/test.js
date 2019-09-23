@@ -6,17 +6,13 @@ const { convert, IMAGE_FORMATS, LANGUAGES, THEMES } = require( '../' );
 
 // convert code to a file
 convert( {
+    outputFile: path.resolve( __dirname, 'code.png' ),
     inputFile: path.resolve( __dirname, 'code.dart' ),
     language: LANGUAGES.DART,
-    outputFile: path.resolve( __dirname, 'codec.png' ),
     format: IMAGE_FORMATS.PNG,
     padding: '20,30',
     theme: THEMES.FIREWATCH
-} ).then( imageBuffer => {
-
-
-    // save buffer to an image file
-    const outputFile = path.resolve( __dirname, 'code.png' );
-    fs.writeFileSync( outputFile, imageBuffer );
+} ).then( () => {
+    console.log( 'DONE!' );
 } );
 
