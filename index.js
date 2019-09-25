@@ -3,7 +3,8 @@ const path = require( 'path' );
 const _ = require( 'lodash' );
 
 // library functions
-const { stringToAnsi, addLineNumbers, ansiToSVG, svgToImage } = require( './lib/functions' );
+const { getExecutableCommand, formatTerminalOutput } = require( './lib/util' );
+const { executeCodeFile, codeToImageBuffer, appendImage } = require( './lib/functions' );
 const { IMAGE_FORMATS, LANGUAGES, THEMES } = require( './lib/constants' );
 
 // current working directory
@@ -19,6 +20,10 @@ const convert = async ( {
     format = IMAGE_FORMATS.PNG,
     padding = '20,30',
     theme = THEMES.FIREWATCH,
+    ignoreLineNumbers = false,
+    imageSize = null, // { width, height }
+    scale = 5,
+    execute = null,
 } ) => {
 
     // absolute paths
@@ -27,25 +32,40 @@ const convert = async ( {
 
     // read input file in text format
     const code = fs.readFileSync( inputFilePath, { encoding: 'utf-8' } );
-    
-    // convert string to ANSI with syntax highlighting and add line numbers
-    const codeAnsiFormat = addLineNumbers( stringToAnsi( code, language ) );
-
-    // convert ANSI text SVG string
-    const svg = ansiToSVG( {
-        str: codeAnsiFormat,
-        padding,
-        theme
-    } );
 
     // convert SVG string to an image buffer
-    const imageBuffer = await svgToImage( { svg, format } );
+    const masterImage = await codeToImageBuffer( { code, language, format, padding, theme, ignoreLineNumbers, scale, imageSize } );
+
+    // execute code and append result to the output image
+    if( execute !== null ) {
+
+        // execute a file and get results
+        const codeExecResult = await executeCodeFile( { inputFilePath, execute } );
+
+        // executed command
+        const executedCommand = getExecutableCommand( inputFilePath, execute );
+
+        // create terminal output string
+        const terminalOutput = formatTerminalOutput( executedCommand, codeExecResult );
+
+        // image of the execution result
+        const resultImage = await codeToImageBuffer( { code: terminalOutput, language: null, format, padding, theme, ignoreLineNumbers: true } );
+
+        // final putput image
+        const finalImage = await appendImage( { masterImage, childImage: resultImage, scale, padding } );
+
+        if( undefined !== outputFilePath ) {
+            return fs.writeFile( outputFile, finalImage );
+        } else {
+            return finalImage;
+        }
+    }
 
     // save `imageBuffer` to local file or return `imageBuffer`
     if( undefined !== outputFilePath ) {
-        return fs.writeFile( outputFile, imageBuffer );
+        return fs.writeFile( outputFile, buffer );
     } else {
-        return imageBuffer;
+        return buffer;
     }
 };
 
