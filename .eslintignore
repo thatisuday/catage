@@ -1,0 +1,6 @@
+node_modules/**
+src/js/vendors/**
+__platforms__/**
+dist/**
+postcss.config.js
+webpack.config.js

@@ -25,6 +25,7 @@
   "homepage": "https://github.com/thatisuday/catage#readme",
   "dependencies": {
     "ansi-to-svg": "^1.4.3",
+    "buffer-image-size": "^0.6.4",
     "chalk": "^2.4.2",
     "color-thief": "^2.2.5",
     "commander": "^3.0.1",

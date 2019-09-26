@@ -10,6 +10,16 @@ const { IMAGE_FORMATS, LANGUAGES, THEMES } = require( './lib/constants' );
 // current working directory
 const CWD = process.cwd();
 
+// return buffer or write it to a file
+const bufferReturnOrWrite = ( outputFilePath, buffer ) => {
+    if( undefined !== outputFilePath ) {
+        return fs.writeFile( outputFile, buffer );
+    } else {
+        return buffer;
+    }
+};
+
+
 /**
  * @desc Converts a string (code) to an image with syntax highlighting
  */
@@ -22,7 +32,7 @@ const convert = async ( {
     theme = THEMES.FIREWATCH,
     ignoreLineNumbers = false,
     imageSize = null, // { width, height }
-    scale = 5,
+    scale = 2,
     execute = null,
 } ) => {
 
@@ -54,19 +64,12 @@ const convert = async ( {
         // final putput image
         const finalImage = await appendImage( { masterImage, childImage: resultImage, scale, padding } );
 
-        if( undefined !== outputFilePath ) {
-            return fs.writeFile( outputFile, finalImage );
-        } else {
-            return finalImage;
-        }
+        // return or write buffer
+        return bufferReturnOrWrite( outputFilePath, finalImage );
     }
 
-    // save `imageBuffer` to local file or return `imageBuffer`
-    if( undefined !== outputFilePath ) {
-        return fs.writeFile( outputFile, buffer );
-    } else {
-        return buffer;
-    }
+    // return or write buffer
+    return bufferReturnOrWrite( outputFilePath, finalImage );
 };
 
 /******************************/

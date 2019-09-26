@@ -9,7 +9,6 @@ convert( {
     // by providing `outputFile`, it will be created instead of returning the image buffer
     outputFile: path.resolve( __dirname, 'code.png' ),
 
-
     inputFile: path.resolve( __dirname, 'code.dart' ),
     language: LANGUAGES.DART,
     format: IMAGE_FORMATS.PNG,
