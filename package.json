@@ -30,6 +30,7 @@
     "color-thief": "^2.2.5",
     "commander": "^3.0.1",
     "emphasize": "^2.1.0",
+    "escape-string-regexp": "^2.0.0",
     "fs-extra": "^8.1.0",
     "glob-promise": "^3.4.0",
     "is-glob": "^4.0.1",
