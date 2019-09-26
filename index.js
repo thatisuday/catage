@@ -4,8 +4,8 @@ const _ = require( 'lodash' );
 const sharp = require( 'sharp' );
 
 // library functions
-const { getExecutableCommand, formatTerminalOutput, getClippingMask, getImageDimensions, getWindowFrame, getSvgDimensions } = require( './lib/util' );
-const { executeCodeFile, codeToImageBuffer, appendImage, addCornerRadius, addLineNumbers, stringToAnsi, ansiTextToSVG , createFinalSVG, svgToImage } = require( './lib/functions' );
+const { getExecutableCommand, formatTerminalOutput, getClippingMask, getImageDimensions, getSvgDimensions } = require( './lib/util' );
+const { executeCodeFile, codeToImageBuffer, appendImage, addCornerRadius, addLineNumbers, stringToAnsi, ansiTextToSVG , createFinalSVG, svgToImage, getOsxWindowHeader, getExecutionResultInTerminalWindow } = require( './lib/functions' );
 const { IMAGE_FORMATS, LANGUAGES, THEMES } = require( './lib/constants' );
 
 // current working directory
@@ -61,7 +61,7 @@ const convert = async ( {
 
     // get body svg dim
     const bodySvgDim = getSvgDimensions( bodySVG );
-    const headSVG = getWindowFrame( bodySvgDim.width, 'Running Dart Code' );
+    const headSVG = getOsxWindowHeader( bodySvgDim.width, 'Running Dart Code' );
 
     // execute a file and get results
     const codeExecResult = await executeCodeFile( { inputFilePath, execute } );
@@ -76,11 +76,13 @@ const convert = async ( {
 
     const resultSVG = ansiTextToSVG( {
         str: resultAnsiFormat,
-        padding,
+        padding: '30,0',
         scale
     } );
 
-    const finalSVG = createFinalSVG( { header: headSVG, body: bodySVG, footer: resultSVG, cornerRadius: 3 } );
+    const resultSvgInTerminal = getExecutionResultInTerminalWindow( resultSVG, bodySvgDim.width );
+
+    const finalSVG = createFinalSVG( { header: headSVG, body: bodySVG, footer: resultSvgInTerminal, cornerRadius: 3 } );
 
     const finalImageBuffer = await svgToImage( { svg: finalSVG, format, scale } );
 

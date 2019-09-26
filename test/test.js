@@ -12,7 +12,7 @@ convert( {
     inputFile: path.resolve( __dirname, 'code.dart' ),
     language: LANGUAGES.DART,
     format: IMAGE_FORMATS.PNG,
-    padding: '10,30',
+    padding: '30,20',
     theme: THEMES.FIREWATCH,
     execute: 'dart __INPUT_FILE__'
 } ).then( () => {
