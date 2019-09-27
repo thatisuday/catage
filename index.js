@@ -4,22 +4,25 @@ const _ = require( 'lodash' );
 const sharp = require( 'sharp' );
 
 // library functions
-const { getExecutableCommand, formatTerminalOutput, getClippingMask, getImageDimensions, getSvgDimensions } = require( './lib/util' );
-const { executeCodeFile, codeToImageBuffer, appendImage, addCornerRadius, addLineNumbers, stringToAnsi, ansiTextToSVG , createFinalSVG, svgToImage, getOsxWindowHeader, getExecutionResultInTerminalWindow } = require( './lib/functions' );
+const { getSvgDimensions } = require( './lib/util' );
+const { codeToSvg, createFinalSVG, svgToImage, getOsxWindowSvg, getTerminalWindowSvg, getExecutionResultSVG } = require( './lib/functions' );
 const { IMAGE_FORMATS, LANGUAGES, THEMES } = require( './lib/constants' );
 
 // current working directory
 const CWD = process.cwd();
 
-// return buffer or write it to a file
-const bufferReturnOrWrite = ( outputFilePath, buffer ) => {
+/**
+ * @desc Return image buffer or write it to a file.
+ * @param {*} outputFilePath - output file path
+ * @param {*} buffer - image buffer
+ */
+const returnBufferOrWrite = ( outputFilePath, buffer ) => {
     if( undefined !== outputFilePath ) {
         return fs.writeFile( outputFilePath, buffer );
     } else {
         return buffer;
     }
 };
-
 
 /**
  * @desc Converts a string (code) to an image with syntax highlighting
@@ -29,11 +32,11 @@ const convert = async ( {
     outputFile,
     language = LANGUAGES.DART,
     format = IMAGE_FORMATS.PNG,
-    padding = '20,30',
     theme = THEMES.FIREWATCH,
     ignoreLineNumbers = false,
     scale = 2,
-    execute = null,
+    addWindowFrame = true,
+    execute = false,
 } ) => {
 
     // absolute paths
@@ -43,86 +46,56 @@ const convert = async ( {
     // read input file in text format
     const code = fs.readFileSync( inputFilePath, { encoding: 'utf-8' } );
 
-    // convert SVG string to an image buffer
-    // const codeImage = await codeToImageBuffer( { code, language, format, padding, theme, scale, ignoreLineNumbers } );
-
     /*********************/
 
-    // highlight code syntax in ANSI color format and add line numbers
-    const codeAnsiFormat = addLineNumbers( stringToAnsi( code, language ), ignoreLineNumbers );
+    // header, body and footer SVG images to construct final image
+    const svgImages = {
 
-    // convert ANSI formatted text to SVG string
-    const bodySVG = ansiTextToSVG( {
-        str: codeAnsiFormat,
-        padding,
-        theme,
-        scale
+        // OSX window frame
+        header: {
+            svg: undefined,
+            dimensions: undefined
+        },
+
+        // actual code
+        body: {
+            svg: undefined,
+            dimensions: undefined
+        },
+
+        // terminal result
+        footer: {
+            svg: undefined,
+            dimensions: undefined
+        },
+    };
+
+    // create SVG image from code with syntax highlighting
+    svgImages.body.svg = codeToSvg( { code, language, theme, padding: '20,30', scale, ignoreLineNumbers } );
+    svgImages.body.dimensions = getSvgDimensions( svgImages.body.svg );
+
+    // create SVG image for OSX window frame
+    if( addWindowFrame ) {
+        svgImages.header.svg = getOsxWindowSvg( svgImages.body.dimensions.width, 'Running Dart Code' );
+        svgImages.header.dimensions = getSvgDimensions( svgImages.header.svg );
+    }
+
+    // execute code file
+    if( execute ) {
+        svgImages.footer.svg = await getExecutionResultSVG( { inputFilePath, execute, scale, width: svgImages.body.dimensions.width } );
+        svgImages.footer.dimensions = getSvgDimensions( svgImages.footer.svg );
+    }
+
+    const finalSVG = createFinalSVG( {
+        header: svgImages.header.svg,
+        body: svgImages.body.svg,
+        footer: svgImages.footer.svg,
+        cornerRadius: 5
     } );
-
-    // get body svg dim
-    const bodySvgDim = getSvgDimensions( bodySVG );
-    const headSVG = getOsxWindowHeader( bodySvgDim.width, 'Running Dart Code' );
-
-    // execute a file and get results
-    const codeExecResult = await executeCodeFile( { inputFilePath, execute } );
-
-    // executed command
-    const executedCommand = getExecutableCommand( inputFilePath, execute );
-
-    // create terminal output string
-    const terminalOutput = formatTerminalOutput( executedCommand, codeExecResult );
-
-    const resultAnsiFormat = addLineNumbers( stringToAnsi( terminalOutput, null ), true );
-
-    const resultSVG = ansiTextToSVG( {
-        str: resultAnsiFormat,
-        padding: '30,0',
-        scale
-    } );
-
-    const resultSvgInTerminal = getExecutionResultInTerminalWindow( resultSVG, bodySvgDim.width );
-
-    const finalSVG = createFinalSVG( { header: headSVG, body: bodySVG, footer: resultSvgInTerminal, cornerRadius: 3 } );
 
     const finalImageBuffer = await svgToImage( { svg: finalSVG, format, scale } );
 
-
-
-    return bufferReturnOrWrite( outputFilePath, finalImageBuffer );
-
-
-    /*********************/
-
-
-    return null
-
-    // execute code and append result to the output image
-    if( execute !== null ) {
-
-        // execute a file and get results
-        const codeExecResult = await executeCodeFile( { inputFilePath, execute } );
-
-        // executed command
-        const executedCommand = getExecutableCommand( inputFilePath, execute );
-
-        // create terminal output string
-        const terminalOutput = formatTerminalOutput( executedCommand, codeExecResult );
-
-        // image of the execution result
-        const resultImage = await codeToImageBuffer( { code: terminalOutput, language: null, format, padding, theme, scale, ignoreLineNumbers: true } );
-
-        // final putput image
-        const finalImage = await appendImage( { masterImage: codeImage, childImage: resultImage, scale, padding } );
-
-        // return composite image buffer
-        const finalImageWithCornerRadius = await addCornerRadius( { image: finalImage, radius: 30 } );
-
-        // return or write buffer
-        return bufferReturnOrWrite( outputFilePath, finalImageWithCornerRadius );
-    }
-
-    // return or write buffer
-    return bufferReturnOrWrite( outputFilePath, codeImage );
+    return returnBufferOrWrite( outputFilePath, finalImageBuffer );
 };
 
 /******************************/
