@@ -1,6 +1,6 @@
 {
   "name": "catage",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Node package and CLI tool to convert code into image with syntax highlighting",
   "main": "index.js",
   "bin": "bin/index.js",
@@ -25,18 +25,13 @@
   "homepage": "https://github.com/thatisuday/catage#readme",
   "dependencies": {
     "ansi-to-svg": "^1.4.3",
-    "buffer-image-size": "^0.6.4",
     "chalk": "^2.4.2",
-    "color-thief": "^2.2.5",
     "commander": "^3.0.1",
     "emphasize": "^2.1.0",
     "escape-string-regexp": "^2.0.0",
     "fs-extra": "^8.1.0",
-    "glob-promise": "^3.4.0",
-    "is-glob": "^4.0.1",
     "lodash": "^4.17.15",
     "puppeteer": "^1.20.0",
-    "sharp": "^0.23.0",
     "svg-to-dataurl": "^1.0.0"
   }
 }

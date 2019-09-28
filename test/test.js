@@ -3,18 +3,22 @@ const path = require( 'path' );
 // import library functions and constants
 const { convert, IMAGE_FORMATS, LANGUAGES, THEMES } = require( '../' );
 
-// convert code to a file
+// create image of a code file
 convert( {
 
-    // by providing `outputFile`, it will be created instead of returning the image buffer
-    outputFile: path.resolve( __dirname, 'code.png' ),
+    // by ignoring `outputFile` option, promise resolution will return an image buffer
+    outputFile: path.resolve( __dirname, 'set-data-structure.png' ),
 
-    inputFile: path.resolve( __dirname, 'code.dart' ),
+    inputFile: path.resolve( __dirname, 'set-data-structure.dart' ),
     language: LANGUAGES.DART,
     format: IMAGE_FORMATS.PNG,
-    padding: '30,20',
     theme: THEMES.FIREWATCH,
-    execute: 'dart __INPUT_FILE__'
+    ignoreLineNumbers: false,
+    scale: 2,
+    hasFrame: true,
+    frameTitle: 'Dart Sets Data Structure',
+    execute: 'dart __FILE__', // `__FILE__` placeholder is mandatory
+    displayCommand: 'dart sets.dart',
 } ).then( () => {
     console.log( 'DONE!' );
 } );

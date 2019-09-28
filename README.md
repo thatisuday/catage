@@ -20,40 +20,86 @@ convert( options );
 ### options
 | Name | Use | default Value |
 | ---- | --- | ------------- |
-| inputFile | Relative or absolue path of a code (text) file | undefined |
-| outputFile | Relative or absolue of the output image file | undefined |
-| language | Language of the code file | LANGUAGES.DART |
-| theme | Theme for the syntax highlighting | THEMES.FIREWATCH |
-| padding | Gap between code and image edges. Value could be string or a number | '20,30' |
-| format | Format of the output image file | IMAGE_FORMATS.PNG |
+| inputFile | Required: Relative or absolue path of a code (text) file. | `undefined` |
+| outputFile | Required: Relative or absolue of the output image file. | `undefined` |
+| language | Language of the code file. | `LANGUAGES.DART` |
+| theme | Theme for the syntax highlighting. | `THEMES.FIREWATCH` |
+| format | Format of the output image file. | `IMAGE_FORMATS.PNG` |
+| ignoreLineNumbers | Avoid adding line numbers to the code. | `false` |
+| scale | DPI scale factor of the output image. | `2` |
+| hasFrame | Add OSX window frame in the output image. | `true` |
+| execute | Execute a command with `inputFile` and inject result in output image file. | `null` |
+| displayCommand | An alternative command to display in the output image. | `execute` option value |
 
 > Supported themes: https://iterm2colorschemes.com/ <br>
 Supported languages: https://github.com/highlightjs/highlight.js/tree/master/src/languages <br>
 Supported image formats: jpeg,jpg
 
-## Example
+### Example
 ```js
 const path = require( 'path' );
 
-// import convert function and constants
+// import library functions and constants
 const { convert, IMAGE_FORMATS, LANGUAGES, THEMES } = require( '../' );
 
-// convert `code.dart` file to `code.png` file
+// create image of a code file
 convert( {
-    inputFile: path.resolve( __dirname, 'code.dart' ),
-    outputFile: path.resolve( __dirname, 'code.png' ),
+
+    // by ignoring `outputFile` option, promise resolution will return an image buffer
+    outputFile: path.resolve( __dirname, 'set-data-structure.png' ),
+
+    inputFile: path.resolve( __dirname, 'set-data-structure.dart' ),
     language: LANGUAGES.DART,
-    theme: THEMES.FIREWATCH,
-    padding: '20,30',
     format: IMAGE_FORMATS.PNG,
+    theme: THEMES.FIREWATCH,
+    ignoreLineNumbers: false,
+    scale: 2,
+    hasFrame: true,
+    frameTitle: 'Dart Sets Data Structure',
+    execute: 'dart __FILE__', // `__FILE__` placeholder is mandatory
+    displayCommand: 'dart sets.dart',
+} ).then( () => {
+    console.log( 'DONE!' );
 } );
 ```
 
-![example](/test/code.png?raw=true)
+#### Output Image
+![example](/test/set-data-structure.png?raw=true)
 
 
-## Upcoming changes
-- CLI tool to convert code to image files
-- Ability to add output image corner radius [optional]
-- Adding MacOS window frame to the output image [optional]
-- Executing code file and compositing output image with the results [optional]
+## CLI
+```
+$ catage --help
+Usage: catage [options] <inputFile> <outputFile>
+
+Convert code (text) file to an image file
+
+Options:
+  -v, --version                       Prints current CLI version.
+  -l, --language <language>           Language of the code in the input file
+  -t, --theme <theme>                 Theme for the syntax highlighting
+  -f, --format <format>               Format of the output image file ( png / jpeg ).
+  -s, --scale <scale>                 DPI scale factor of the output image
+  --no-line-numbers                   Ignore line numbers in the code
+  --no-frame                          Ignore OSX window frame in the output image
+  --frame-title <frameTitle>          Title of the OSX window frame
+  --execute <execute>                 Command to execute with the code file. You must provide `__FILE__` placeholder in the command string.
+  --display-command <displayCommand>  An alternative command to display in the output result.
+  -h, --help                          output usage information
+```
+
+### Example
+```
+catage recursive-function.py recursive-function.png -l python --frame-title "Recursive Function" --execute="python3 __FILE__" --display-command="python recursive-function.py"
+```
+
+#### Output Image
+![example](/test/recursive-function.png?raw=true)
+
+### Simple example
+
+```
+catage go-defer.go go-defer.png -l go -t AtomOneLight --no-line-numbers --no-frame
+```
+#### Output Image
+![example](/test/go-defer.png?raw=true)

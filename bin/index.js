@@ -7,7 +7,7 @@ const _ = require( 'lodash' );
 const package = require( '../package.json' );
 
 // import library functions and constants
-const { convert, IMAGE_FORMATS, LANGUAGES, THEMES } = require( '../' );
+const { convert } = require( '../' );
 
 // intialize CLI interface
 program
@@ -18,22 +18,37 @@ program
 .arguments( '<inputFile> <outputFile>' )
 
 // command line flags
-.option( '-l, --language <language>', 'Language of the code in the input file', LANGUAGES.DART )
-.option( '-t, --theme <theme>', 'Theme for the syntax highlighting', THEMES.FIREWATCH )
-.option( '-p, --padding <padding>', 'Gap between code and image edges.', '20,30' )
-.option( '-f, --format <format>', 'Format of the output image file', IMAGE_FORMATS.PNG )
+.option( '-l, --language <language>', 'Language of the code in the input file' )
+.option( '-t, --theme <theme>', 'Theme for the syntax highlighting' )
+.option( '-f, --format <format>', 'Format of the output image file ( png / jpeg ).' )
+.option( '-s, --scale <scale>', 'DPI scale factor of the output image' )
+.option( '--no-line-numbers', 'Ignore line numbers in the code' )
+.option( '--no-frame', 'Ignore OSX window frame in the output image' )
+.option( '--frame-title <frameTitle>', 'Title of the OSX window frame' )
+.option( '--execute <execute>', 'Command to execute with the code file. You must provide `__FILE__` placeholder in the command string.' )
+.option( '--display-command <displayCommand>', 'An alternative command to display in the output result.' )
 
 // perform action
-.action( ( inputFile, outputFile, options ) => {
+.action( ( inputFile, outputFile, opts ) => {
+
+    // final `convert` options
+    const options = {
+        language: opts.language,
+        theme: opts.theme,
+        format: opts.format,
+        scale: opts.scale,
+        ignoreLineNumbers: ! opts.lineNumbers,
+        hasFrame: opts.frame,
+        frameTitle: opts.frameTitle,
+        execute: opts.execute,
+        displayCommand: opts.displayCommand,
+    };
 
     // convert code file to an image
     convert( {
         inputFile,
         outputFile,
-        language: options.language,
-        theme: options.theme,
-        padding: options.padding,
-        format: options.format,
+        ...options
     } );
     
 } )

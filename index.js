@@ -1,11 +1,10 @@
 const fs = require( 'fs-extra' );
 const path = require( 'path' );
 const _ = require( 'lodash' );
-const sharp = require( 'sharp' );
 
 // library functions
 const { getSvgDimensions } = require( './lib/util' );
-const { codeToSvg, createFinalSVG, svgToImage, getOsxWindowSvg, getTerminalWindowSvg, getExecutionResultSVG } = require( './lib/functions' );
+const { codeToSvg, createFinalSVG, svgToImage, getOsxWindowSvg, getExecutionResultSVG } = require( './lib/functions' );
 const { IMAGE_FORMATS, LANGUAGES, THEMES } = require( './lib/constants' );
 
 // current working directory
@@ -31,12 +30,14 @@ const convert = async ( {
     inputFile,
     outputFile,
     language = LANGUAGES.DART,
-    format = IMAGE_FORMATS.PNG,
     theme = THEMES.FIREWATCH,
+    format = IMAGE_FORMATS.PNG,
     ignoreLineNumbers = false,
     scale = 2,
-    addWindowFrame = true,
-    execute = false,
+    hasFrame = true,
+    frameTitle = 'Code Snippet',
+    execute = null,
+    displayCommand = null,
 } ) => {
 
     // absolute paths
@@ -75,14 +76,14 @@ const convert = async ( {
     svgImages.body.dimensions = getSvgDimensions( svgImages.body.svg );
 
     // create SVG image for OSX window frame
-    if( addWindowFrame ) {
-        svgImages.header.svg = getOsxWindowSvg( svgImages.body.dimensions.width, 'Running Dart Code' );
+    if( hasFrame ) {
+        svgImages.header.svg = getOsxWindowSvg( svgImages.body.dimensions.width, frameTitle );
         svgImages.header.dimensions = getSvgDimensions( svgImages.header.svg );
     }
 
     // execute code file
     if( execute ) {
-        svgImages.footer.svg = await getExecutionResultSVG( { inputFilePath, execute, scale, width: svgImages.body.dimensions.width } );
+        svgImages.footer.svg = await getExecutionResultSVG( { inputFilePath, execute, displayCommand, scale, width: svgImages.body.dimensions.width } );
         svgImages.footer.dimensions = getSvgDimensions( svgImages.footer.svg );
     }
 
