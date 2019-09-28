@@ -6,6 +6,8 @@ Node package and CLI tool to convert code into image with syntax highlighting.
 [![downloads](https://img.shields.io/npm/dt/catage?style=flat-square)](https://www.npmjs.com/package/catage)
 [![license](https://img.shields.io/npm/l/catage?style=flat-square)](https://www.npmjs.com/package/catage)
 
+![example](/test/set-data-structure.png?raw=true)
+
 ## Install using NPM
 ```bash
 npm install --save catage
