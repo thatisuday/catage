@@ -1,6 +1,11 @@
 # catage (**ca**t to im**age**)
 Node package and CLI tool to convert code into image with syntax highlighting.
 
+[![npm-version](https://img.shields.io/npm/v/catage?style=flat-square)](https://www.npmjs.com/package/catage)
+[![dependencies](https://img.shields.io/david/thatisuday/catage?style=flat-square)](https://www.npmjs.com/package/catage)
+[![downloads](https://img.shields.io/npm/dt/catage?style=flat-square)](https://www.npmjs.com/package/catage)
+[![license](https://img.shields.io/npm/l/catage?style=flat-square)](https://www.npmjs.com/package/catage)
+
 ## Install using NPM
 ```bash
 npm install --save catage
@@ -88,18 +93,17 @@ Options:
   -h, --help                          output usage information
 ```
 
-### Example
+### 1. Example
 ```
 catage recursive-function.py recursive-function.png -l python --frame-title "Recursive Function" --execute="python3 __FILE__" --display-command="python recursive-function.py"
 ```
 
 #### Output Image
-![example](/test/recursive-function.png?raw=true)
+<img src="/test/recursive-function.png?raw=true" width="500"/>
 
-### Simple example
-
+### 2. Simplest example
 ```
 catage go-defer.go go-defer.png -l go -t AtomOneLight --no-line-numbers --no-frame
 ```
 #### Output Image
-![example](/test/go-defer.png?raw=true)
+<img src="/test/go-defer.png?raw=true" width="500"/>
