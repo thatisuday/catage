@@ -72,7 +72,7 @@ const convert = async ( {
     };
 
     // create SVG image from code with syntax highlighting
-    svgImages.body.svg = codeToSvg( { code, language, theme, padding: '20,30', scale, ignoreLineNumbers } );
+    svgImages.body.svg = codeToSvg( { code, language, theme, padding: '20,20', scale, ignoreLineNumbers } );
     svgImages.body.dimensions = getSvgDimensions( svgImages.body.svg );
 
     // create SVG image for OSX window frame
