@@ -11,6 +11,7 @@ Node package and CLI tool to convert code into image with syntax highlighting.
 ## Install using NPM
 ```bash
 npm install --save catage
+npm install --global catage
 ```
 
 ## API
