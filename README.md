@@ -41,7 +41,7 @@ convert( options );
 
 > Supported themes: https://iterm2colorschemes.com/ <br>
 Supported languages: https://github.com/highlightjs/highlight.js/tree/master/src/languages <br>
-Supported image formats: jpeg,jpg
+Supported image formats: png,jpeg
 
 ### Example
 ```js
@@ -110,3 +110,7 @@ catage go-defer.go go-defer.png -l go -t AtomOneLight --no-line-numbers --no-fra
 ```
 #### Output Image
 <img src="/test/go-defer.png?raw=true" width="500"/>
+
+
+## Tricks
+- If you want to take screenshot of a plain text file (no-language), provide any value to the `language` option that does not listed in supported languages. Since it is a plain text file, you can not use `execute` option. Also the code won't be syntax highlighted.
