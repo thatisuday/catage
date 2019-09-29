@@ -3,7 +3,7 @@ const path = require( 'path' );
 const _ = require( 'lodash' );
 
 // library functions
-const { getSvgDimensions } = require( './lib/util' );
+const { getSvgDimensions, getThemeColors } = require( './lib/util' );
 const { codeToSvg, createFinalSVG, svgToImage, getOsxWindowSvg, getExecutionResultSVG } = require( './lib/functions' );
 const { IMAGE_FORMATS, LANGUAGES, THEMES } = require( './lib/constants' );
 
@@ -83,7 +83,7 @@ const convert = async ( {
 
     // execute code file
     if( execute ) {
-        svgImages.footer.svg = await getExecutionResultSVG( { inputFilePath, execute, displayCommand, scale, width: svgImages.body.dimensions.width } );
+        svgImages.footer.svg = await getExecutionResultSVG( { inputFilePath, execute, displayCommand, theme, scale, width: svgImages.body.dimensions.width } );
         svgImages.footer.dimensions = getSvgDimensions( svgImages.footer.svg );
     }
 

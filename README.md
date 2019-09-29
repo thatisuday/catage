@@ -98,7 +98,7 @@ Options:
 
 ### 1. Example
 ```
-catage recursive-function.py recursive-function.png -l python --frame-title "Recursive Function" --execute="python3 __FILE__" --display-command="python recursive-function.py"
+catage recursive-function.py recursive-function.png -l python -t "Builtin Solarized Light" --frame-title "Recursive Function" --execute="python3 __FILE__" --display-command="python recursive-function.py"
 ```
 
 #### Output Image
