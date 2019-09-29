@@ -99,11 +99,14 @@ const convert = async ( {
             return returnBufferOrWrite( outputFilePath, finalSVG );
 
         case IMAGE_FORMATS.JPG:
-            format = IMAGE_FORMATS.JPEG; // jshint ignore:line
+            format = IMAGE_FORMATS.JPEG;
         case IMAGE_FORMATS.JPEG:
         case IMAGE_FORMATS.PNG:
             const finalImageBuffer = await svgToImage( { svg: finalSVG, format, scale } );
             return returnBufferOrWrite( outputFilePath, finalImageBuffer );
+        
+        default:
+            throw new Error('Invalid image format. Valid formats are svg/png/jpeg');
     }
 };
 
