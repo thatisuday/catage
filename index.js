@@ -94,9 +94,17 @@ const convert = async ( {
         cornerRadius: 5
     } );
 
-    const finalImageBuffer = await svgToImage( { svg: finalSVG, format, scale } );
+    switch( format ) {
+        case IMAGE_FORMATS.SVG:
+            return returnBufferOrWrite( outputFilePath, finalSVG );
 
-    return returnBufferOrWrite( outputFilePath, finalImageBuffer );
+        case IMAGE_FORMATS.JPG:
+            format = IMAGE_FORMATS.JPEG; // jshint ignore:line
+        case IMAGE_FORMATS.JPEG:
+        case IMAGE_FORMATS.PNG:
+            const finalImageBuffer = await svgToImage( { svg: finalSVG, format, scale } );
+            return returnBufferOrWrite( outputFilePath, finalImageBuffer );
+    }
 };
 
 /******************************/
