@@ -4,7 +4,9 @@
   "description": "Node package and CLI tool to convert code into image with syntax highlighting",
   "main": "index.js",
   "bin": "bin/index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "mocha test/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/thatisuday/catage.git"
@@ -36,5 +38,11 @@
     "pretty": "^2.0.0",
     "puppeteer": "^1.20.0",
     "svg-to-dataurl": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "file-type": "^12.3.0",
+    "is-svg": "^4.2.0",
+    "mocha": "^6.2.1"
   }
 }

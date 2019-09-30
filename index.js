@@ -5,7 +5,7 @@ const _ = require( 'lodash' );
 const pretty = require( 'pretty' );
 
 // library functions
-const { getSvgDimensions, getThemeColors } = require( './lib/util' );
+const { getSvgDimensions } = require( './lib/util' );
 const { codeToSvg, createFinalSVG, svgToImage, getOsxWindowSvg, getExecutionResultSVG } = require( './lib/functions' );
 const { IMAGE_FORMATS, LANGUAGES, THEMES } = require( './lib/constants' );
 
@@ -26,13 +26,13 @@ const returnBufferOrWrite = ( path, buffer ) => {
 }
 
 /**
- * @desc Process SVG image
+ * @desc Process final SVG image
  * @param { string } path - output file path
  * @param { string } svg - final SVG image string
  * @param { string } format - output image format
  * @param { number } scale - DPI scale factor
  */
-const processSvg = async ( { path, svg, format, scale } ) => {
+const processFinalSvg = async ( { path, svg, format, scale } ) => {
 
     // override JPG alias
     format = _.toLower( format );
@@ -134,10 +134,7 @@ const convert = async ( {
     } );
 
     // process SVG image
-    await processSvg( { path: outputFilePath, svg: finalSVG, format, scale } );
-
-    // log success message
-    console.log( chalk.green.bold( 'DONE!' ) );
+    return await processFinalSvg( { path: outputFilePath, svg: finalSVG, format, scale } );
 };
 
 /******************************/

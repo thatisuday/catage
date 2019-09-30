@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="470" height="404" viewBox="0, 0, 470, 404">
+  <clipPath id="clipPath">
+    <rect x="0" y="0" width="470" height="404" rx="5" ry="5" />
+  </clipPath>
+  <g clip-path="url(#clipPath)">
+
+    <!-- header -->
+
+    <!-- body -->
+    <svg x="0" y="0" width="470" height="404" font-family="monospace" font-size="14">
+      <g fill="#2a2c33">
+        <rect x="0" y="0" width="470.07" height="404.45" fill="#f9f9f9" /><text x="20" y="34.55" fill="#3f953a">package</text><text x="87.21" y="34.55"> main</text><text x="20" y="72.55" fill="#000000">// import &#x60;fmt&#x60; package</text><text x="20" y="91.55" fill="#3f953a">import</text><text x="78.81" y="91.55" fill="#3f953a">&#x22;fmt&#x22;</text><text x="20" y="129.55" fill="#000000">// simple function</text><text x="20" y="148.55" fill="#3f953a">func</text><text x="62.01" y="148.55" fill="#2f5af3">sayDone</text><text x="120.82" y="148.55">() {</text><text x="28.4" y="167.55">&#x9;fmt.Println(</text><text x="129.22" y="167.55" fill="#3f953a">&#x22;I am done&#x22;</text><text x="221.63" y="167.55">)</text><text x="20" y="186.55">}</text><text x="20" y="224.55" fill="#000000">// main execution function</text><text x="20" y="243.55" fill="#3f953a">func</text><text x="62.01" y="243.55" fill="#2f5af3">main</text><text x="95.61" y="243.55">() {</text><text x="28.4" y="262.55">&#x9;fmt.Println(</text><text x="129.22" y="262.55" fill="#3f953a">&#x22;main started&#x22;</text><text x="246.84" y="262.55">)</text><text x="36.8" y="300.55" fill="#000000">// defer function execution until &#x60;main&#x60; returns</text><text x="28.4" y="319.55">&#x9;</text><text x="28.4" y="319.55" fill="#3f953a">defer</text><text x="78.81" y="319.55"> sayDone()</text><text x="28.4" y="357.55">&#x9;fmt.Println(</text><text x="129.22" y="357.55" fill="#3f953a">&#x22;main finished&#x22;</text><text x="255.24" y="357.55">)</text><text x="20" y="376.55">}</text></g>
+    </svg>
+
+    <!-- footer -->
+  </g>
+</svg>
