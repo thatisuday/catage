@@ -86,7 +86,7 @@ Options:
   -v, --version                       Prints current CLI version.
   -l, --language <language>           Language of the code in the input file
   -t, --theme <theme>                 Theme for the syntax highlighting
-  -f, --format <format>               Format of the output image file ( png / jpeg ).
+  -f, --format <format>               Format of the output image file ( png / jpeg / jpg / svg ).
   -s, --scale <scale>                 DPI scale factor of the output image
   --no-line-numbers                   Ignore line numbers in the code
   --no-frame                          Ignore OSX window frame in the output image

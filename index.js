@@ -1,6 +1,8 @@
 const fs = require( 'fs-extra' );
 const path = require( 'path' );
+const chalk = require( 'chalk' );
 const _ = require( 'lodash' );
+const pretty = require( 'pretty' );
 
 // library functions
 const { getSvgDimensions, getThemeColors } = require( './lib/util' );
@@ -12,14 +14,50 @@ const CWD = process.cwd();
 
 /**
  * @desc Return image buffer or write it to a file.
- * @param {*} outputFilePath - output file path
+ * @param {*} path - output file path
  * @param {*} buffer - image buffer
  */
-const returnBufferOrWrite = ( outputFilePath, buffer ) => {
-    if( undefined !== outputFilePath ) {
-        return fs.writeFile( outputFilePath, buffer );
+const returnBufferOrWrite = ( path, buffer ) => {
+    if( undefined !== path ) {
+        return fs.writeFile( path, buffer );
     } else {
         return buffer;
+    }
+}
+
+/**
+ * @desc Process SVG image
+ * @param { string } path - output file path
+ * @param { string } svg - final SVG image string
+ * @param { string } format - output image format
+ * @param { number } scale - DPI scale factor
+ */
+const processSvg = async ( { path, svg, format, scale } ) => {
+
+    // override JPG alias
+    format = _.toLower( format );
+    format = ( format === IMAGE_FORMATS.JPG ) ? IMAGE_FORMATS.JPEG : format;
+
+    // return SVG image or convert to portable image formats
+    switch( format ) {
+
+        // return SVG image
+        case IMAGE_FORMATS.SVG: {
+            return returnBufferOrWrite( path, Buffer.from( pretty( svg, { ocd: true } ), 'utf-8' ) );
+        }
+        
+        // convert SVG to portable image formats
+        case IMAGE_FORMATS.JPEG:
+        case IMAGE_FORMATS.PNG: {
+            const buffer = await svgToImage( { svg, format, scale } );
+            return returnBufferOrWrite( path, buffer );
+        }
+
+        // show error if image format is invalid
+        default: {
+            console.log( chalk.red( `${ chalk.bold( format ) } is invalid image format. Valid formats are ${ _.join( _.values( IMAGE_FORMATS ), ', ' ) }.` ) );
+            process.exit( 0 );
+        }
     }
 };
 
@@ -87,6 +125,7 @@ const convert = async ( {
         svgImages.footer.dimensions = getSvgDimensions( svgImages.footer.svg );
     }
 
+    // create final SVG by merging header, body and footer
     const finalSVG = createFinalSVG( {
         header: svgImages.header.svg,
         body: svgImages.body.svg,
@@ -94,20 +133,11 @@ const convert = async ( {
         cornerRadius: 5
     } );
 
-    switch( format ) {
-        case IMAGE_FORMATS.SVG:
-            return returnBufferOrWrite( outputFilePath, finalSVG );
+    // process SVG image
+    await processSvg( { path: outputFilePath, svg: finalSVG, format, scale } );
 
-        case IMAGE_FORMATS.JPG:
-            format = IMAGE_FORMATS.JPEG;
-        case IMAGE_FORMATS.JPEG:
-        case IMAGE_FORMATS.PNG:
-            const finalImageBuffer = await svgToImage( { svg: finalSVG, format, scale } );
-            return returnBufferOrWrite( outputFilePath, finalImageBuffer );
-        
-        default:
-            throw new Error('Invalid image format. Valid formats are svg/png/jpeg');
-    }
+    // log success message
+    console.log( chalk.green.bold( 'DONE!' ) );
 };
 
 /******************************/
