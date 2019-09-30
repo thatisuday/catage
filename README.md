@@ -106,10 +106,10 @@ catage recursive-function.py recursive-function.png -l python -t "Builtin Solari
 
 ### 2. Simplest example
 ```
-catage go-defer.go go-defer.png -l go -t AtomOneLight --no-line-numbers --no-frame
+catage go-defer.go go-defer.jpg -l go -t AtomOneLight -f jpeg --no-line-numbers --no-frame
 ```
 #### Output Image
-<img src="/test/go-defer.svg?raw=true" width="500"/>
+<img src="/test/go-defer.jpg?raw=true" width="500"/>
 
 
 ## Tricks

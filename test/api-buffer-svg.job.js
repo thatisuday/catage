@@ -11,7 +11,7 @@ module.exports = async () => {
     const buffer = await convert( {
         inputFile: path.resolve( __dirname, 'set-data-structure.dart' ),
         language: LANGUAGES.DART,
-        format: IMAGE_FORMATS.JPEG,
+        format: IMAGE_FORMATS.SVG,
         theme: THEMES.ANDROMEDA,
         ignoreLineNumbers: true,
         scale: 1,
