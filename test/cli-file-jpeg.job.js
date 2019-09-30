@@ -2,7 +2,7 @@ const path = require( 'path' );
 const child_process = require( 'child_process' );
 
 /**
- * @desc Create SVG image of a '.fo' code file using CLI
+ * @desc Create SVG image of a '.go' code file using CLI
  * @return { Promise }
  */
 module.exports = () => {
