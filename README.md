@@ -114,4 +114,4 @@ catage go-defer.go go-defer.png -l go -t AtomOneLight --no-line-numbers --no-fra
 
 ## Tricks
 - If you want to take screenshot of a plain text file (no-language), provide any value to the `language` option that does not listed in supported languages. Since it is a plain text file, you can not use `execute` option. Also the code won't be syntax highlighted.
-- If you are using another program to trigger `catage`, then make sure your program is inheriting `STDIO` of the shell process which started it. This is necessary for syntax highlighting.
+- If you are using another program to trigger `catage` command, then make sure your program is inheriting `STDIO` of the shell process which started it. This is necessary for syntax highlighting.
