@@ -1,6 +1,6 @@
 {
   "name": "catage",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Node package and CLI tool to convert code into image with syntax highlighting",
   "main": "index.js",
   "bin": "bin/index.js",
