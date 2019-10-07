@@ -117,4 +117,4 @@ catage go-defer.go go-defer.jpg -l go -t AtomOneLight -f jpeg --no-line-numbers 
 - If you are using another program to trigger `catage` command, then make sure your program is inheriting `STDIO` of the shell process which started it. This is necessary for syntax highlighting.
 
 ## Warning
-This tool is dependent `puppeteer` NPM package which has external dependency on headless Chromium browser. After installation, `puppeteer` downloads Chromium browser which could be more than 100MB in zipped format. 
+This tool is dependent on `puppeteer` NPM package which has external dependency on headless Chromium browser. After installation, `puppeteer` downloads Chromium browser which could be more than 100MB in zipped format. 
