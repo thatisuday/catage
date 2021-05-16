@@ -76,6 +76,7 @@ const convert = async ( {
     frameTitle = 'Code Snippet',
     execute = null,
     displayCommand = null,
+    backgroundColor = "#999999",
 } ) => {
 
     // absolute paths
@@ -130,7 +131,8 @@ const convert = async ( {
         header: svgImages.header.svg,
         body: svgImages.body.svg,
         footer: svgImages.footer.svg,
-        cornerRadius: 5
+        cornerRadius: 5,
+        backgroundColor,
     } );
 
     // process SVG image

@@ -20,6 +20,7 @@ program
 // command line flags
 .option( '-l, --language <language>', 'Language of the code in the input file' )
 .option( '-t, --theme <theme>', 'Theme for the syntax highlighting' )
+.option("-b, --backgroundColor <backgroundColor>", "Background color")
 .option( '-f, --format <format>', 'Format of the output image file ( svg / png / jpeg ).' )
 .option( '-s, --scale <scale>', 'DPI scale factor of the output image' )
 .option( '--no-line-numbers', 'Ignore line numbers in the code' )
@@ -42,6 +43,7 @@ program
         frameTitle: opts.frameTitle,
         execute: opts.execute,
         displayCommand: opts.displayCommand,
+        backgroundColor: opts.backgroundColor,
     };
 
     // convert code file to an image
