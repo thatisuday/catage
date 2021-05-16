@@ -36,6 +36,7 @@ convert( options );
 | ignoreLineNumbers | Avoid adding line numbers to the code. | `false` |
 | scale | DPI scale factor of the output image. | `2` |
 | hasFrame | Add OSX window frame in the output image. | `true` |
+| backgroundColor | The background color of the produced image | `#999999` |
 | execute | Execute a command with `inputFile` and inject result in output image file. | `null` |
 | displayCommand | An alternative command to display in the output image. | `execute` option value |
 
@@ -64,6 +65,7 @@ convert( {
     scale: 2,
     hasFrame: true,
     frameTitle: 'Dart Sets Data Structure',
+    backgroundColor: '#9f0000',
     execute: 'dart __FILE__', // `__FILE__` placeholder is mandatory
     displayCommand: 'dart sets.dart',
 } ).then( () => {
@@ -86,6 +88,7 @@ Options:
   -v, --version                       Prints current CLI version.
   -l, --language <language>           Language of the code in the input file
   -t, --theme <theme>                 Theme for the syntax highlighting
+  -b, --backgroundColor <color>       Theme for the syntax highlighting
   -f, --format <format>               Format of the output image file ( png / jpeg / jpg / svg ).
   -s, --scale <scale>                 DPI scale factor of the output image
   --no-line-numbers                   Ignore line numbers in the code
